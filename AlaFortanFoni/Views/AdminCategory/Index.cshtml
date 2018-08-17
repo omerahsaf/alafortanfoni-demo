@@ -1,0 +1,40 @@
+﻿@model IEnumerable<AlaFortanFoni.Models.Category>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout - Admin.cshtml";
+}
+
+
+
+<p>
+    @Html.ActionLink("Yeni Kategori Ekle", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ParentId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ParentId)
+        </td>
+        <td>
+            @Html.ActionLink("Düzenle", "Edit", new { id=item.CategoryId }) |
+            @Html.ActionLink("Detay", "Details", new { id=item.CategoryId }) |
+            @Html.ActionLink("Sil", "Delete", new { id=item.CategoryId })
+        </td>
+    </tr>
+}
+
+</table>

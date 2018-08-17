@@ -1,0 +1,54 @@
+﻿<h5 style="color:#444444;" class="card-header">Hava Durumu</h5>
+<div style="color:#444444;" class="card-body">
+    <h5 id="sicaklik"></h5>
+    <div id="sicaklikDetay"></div>
+</div>
+
+<script src="~/scripts/jquery-3.3.1.min.js"></script>
+<script src="~/scripts/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function (){
+
+        function createDetails(icon, text) {
+
+            var el = document.getElementById("sicaklikDetay");
+
+            var img = document.createElement("IMG");
+
+            var txt = document.createElement("SPAN");
+
+            txt.innerText = text;
+
+            img.setAttribute("src", "http://openweathermap.org/img/w/" + icon + ".png");
+
+            var container = document.createElement("DIV");
+
+            container.appendChild(txt);
+            container.appendChild(img);
+
+            el.appendChild(container);
+
+        }
+
+        var url = 'http://api.openweathermap.org/data/2.5/weather?q=İstanbul&lang=tr&units=metric&appid=';
+        var key = '741359c7e36e73868e19b69316d24c7c';
+
+        $.ajax({
+            url:url + key,
+            type :'GET',
+            success: function (data) {
+
+                document.getElementById("sicaklik").innerHTML = "İSTANBUL " + data.main.temp + " ºC";
+
+                data.weather.forEach(function (e) {
+
+                    createDetails(e.icon, e.description);
+
+                });
+
+            }
+
+        });
+    })
+
+</script>

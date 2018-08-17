@@ -1,0 +1,52 @@
+﻿<!--Paget List Usinglerini ekledik-->
+@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<AlaFortanFoni.Models.Article>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/fonts/font-awesome.min.css" rel="stylesheet" />
+
+
+<div class="col-md-8">
+    @foreach (var item in Model)
+    {
+        <article class="col-sm-12">
+            <h2>
+                <a style="color:black" href="/Home/ArticleDetails/@item.ArticleId"> @item.Title</a>
+            </h2>
+            <p class="lead">
+                <img style="color:black" class="d-flex mr-3 rounded-circle" width="70" src="@item.User.UserPhoto" alt="@item.User.UserName" />
+
+            </p>
+            <p> <span class="fa fa-clock-o"></span>@string.Format("{0: MMMM yyyy}", item.Time)</p>
+
+
+            <img style="width:600px" class="img-responsive" src="@item.ArticlePhoto" alt="@item.Title" />
+            <hr />
+            @if (item.Text.Length > 150)
+            {
+                <p>@Html.Raw(item.Text.Substring(0, 150))...</p>
+            }
+            else
+            {
+                <p>@Html.Raw(item.Text)...</p>
+            }
+            <div class="card-body">
+
+                <p class="card-text" style="color:black"></p>
+                <a href="/Home/ArticleDetails/@item.ArticleId" class="btn btn-primary">Devamını oku &rarr;</a>
+            </div>
+        </article>
+    }
+
+    <div class="row">
+        <div class="col-md-8 text-center">
+            <div class="pagedList pagination-lg">
+                @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page }), PagedListRenderOptions.Classic)
+            </div>
+        </div>
+
+    </div>
+</div>

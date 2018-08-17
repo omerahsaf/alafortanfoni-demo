@@ -1,0 +1,59 @@
+﻿@model IEnumerable<AlaFortanFoni.Models.Article>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Kategori Adı")
+        </th>
+        <th>
+            @Html.Label("Ekleyen Kişi")
+        </th>
+        <th>
+            @Html.Label("Başlık")
+        </th>
+
+        <th>
+            @Html.Label("Fotoğtaf")
+        </th>
+        <th>
+            @Html.Label("Yüklenen Tarih")
+        </th>
+        <th>
+            @Html.Label("Okunma Sayısı")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.UserName)
+        </td>
+        <td>
+            <a href="/Home/ArticleDetails/@item.ArticleId">@Html.DisplayFor(modelItem => item.Title)</a>
+        </td>
+      
+        <td>
+            <img src="@item.ArticlePhoto" width="75" class="d-flex mr-3 rounded-circle" alt="@item.Title" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Displayed)
+        </td>
+   
+    </tr>
+}
+
+</table>

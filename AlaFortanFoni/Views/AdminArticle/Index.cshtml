@@ -1,0 +1,80 @@
+﻿
+
+<!-- Makale Listesini sayfalara ayırmak için Paget listi ekledik    -->
+@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<AlaFortanFoni.Models.Article>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout - Admin.cshtml";
+}
+
+
+
+<p>
+    @Html.ActionLink("Yeni Makale Ekle", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("CategoryName")
+        </th>
+        <th>
+            @Html.Label("Creat User")
+        </th>
+        <th>
+            @Html.Label("Title")
+        </th>
+       
+        <th>
+            @Html.Label("ArticlePhoto")
+        </th>
+        <th>
+            @Html.Label("Time")
+        </th>
+        <th>
+            @Html.Label("Displayed")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+       
+        <td>
+           <img width="75" src="@item.ArticlePhoto" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Displayed)
+        </td>
+        <td>
+            @Html.ActionLink("Düzenle", "Edit", new { id=item.ArticleId }) |
+            @Html.ActionLink("Detay", "Details", new { id=item.ArticleId }) |
+            @Html.ActionLink("Sil", "Delete", new { id=item.ArticleId })
+        </td>
+    </tr>
+}
+
+</table>
+
+<div class="row">
+    <div class="col-md-8 text-center">
+        <div class="pagedList pagination-lg">
+            @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page }), PagedListRenderOptions.Classic)
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,15 @@
+﻿
+<h5 style="color:#444444;" class="card-header">Ne Aramıştınız?</h5>
+@using (Html.BeginForm("Search", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div style="color:#444444;" class="card-body">
+        <div style="color:#444444;" class="input-group">
+            <input id="ara" name="ara" type="text" class="form-control" placeholder="aramak istediğiniz....">
+            <span class="input-group-btn">
+                <button class="btn btn-secondary" type="submit">Bul</button>
+            </span>
+        </div>
+    </div>
+
+}
+

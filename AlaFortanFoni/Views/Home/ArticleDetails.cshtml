@@ -1,0 +1,117 @@
+﻿@model AlaFortanFoni.Models.Article
+
+@{
+    ViewBag.Title = "ArticleDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-8">
+
+    <!-- Title -->
+    <h1 class="mt-4">@Model.Title</h1>
+    <!-- Author -->
+    <p class="lead">
+
+        <img class="d-flex mr-3 rounded-circle" width="75" src="@Model.User.UserPhoto" alt="@Model.User.UserName" />
+    <p>Makale Sahibi:</p><a class="fa fa-user" style="color:black" href="#">@Model.User.UserName</a>
+    </p>
+    <hr>
+    <!-- Date/Time -->
+    <p> <span class="fa fa-clock-o"></span>@string.Format("{0: MMMM yyyy}", Model.Time) // <span class="fa fa-eye">(@Model.Displayed) </span>// <span class="fa fa-edit">@Model.Category.CategoryName (@Model.Category.Article.Count())</span></p>
+    <hr>
+    <!-- Preview Image -->
+    <img width="800" class="img-fluid rounded" src="@Model.ArticlePhoto" alt="@Model.Title">
+    <hr>
+    <!-- Post Content -->
+
+    <p class="lead">
+        @Html.Raw(Model.Text);
+    </p>
+    <hr />
+
+    <!-- Comments Form // Üye ise yorum yapsın değil ise Üye olması için Uyarı verilsin -->
+    @if (Session["userid"] != null)
+    {
+        <div class="card my-4">
+            <h5 class="card-header">Yorum</h5>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <textarea id="yorum" typeof="text" class="form-control" rows="3"></textarea>
+                    </div>
+                    <button type="submit" id="gonder" class="btn btn-primary">Yorum Yap</button>
+                </form>
+            </div>
+        </div>
+    }
+
+    else
+    {
+        <h4>Yorum yapmak için Giriş Yapmalısınız</h4>
+        <p><a href="/User/Login/">Giriş</a></p>
+    }
+    <div class="media mb-4">
+
+        @foreach (var item in Model.Comment.ToList())
+        { <ul>
+            <div class="card-header">
+
+                <a class="pull-left"> <img class="d-flex mr-3 rounded-circle" src="@item.User.UserPhoto" width="50" alt="@item.User.UserName"> </a>
+                <div class="media-body">
+                    <h6>
+                        @item.User.UserName
+                        <small>@item.CommentTime</small>
+                    </h6>
+
+                    @item.CommentText
+                    @if (Convert.ToInt32(Session["userid"]) == item.UserId)
+
+                    {
+                        <a class="btn btn-danger" href="/Home/CommentDelete/@item.CommentId">Sil</a>
+                    }
+
+                </div>
+
+            </div>
+        </ul>
+
+        }
+
+    </div>
+
+</div>
+
+
+<!-- Jquery -->
+<script src="~/scripts/jquery-3.3.1.min.js"></script>
+<script src="~/scripts/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function (){
+        $("#gonder").click(function(){
+
+            var yorumunuz = $("#yorum").val();
+            $.ajax({
+                url:'/Home/YorumYap/',
+                data : {yorum: yorumunuz, Makale_Id: @Model.ArticleId},
+                type :'POST',
+                dataType: 'json',
+                success: function (data) {
+                    alert("Yorum Gönderildi" +  yorumunuz);}
+
+            });
+
+        });
+    })
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $.ajax({
+            url:'/Home/OkunmaArttir/',
+            data : {Makale_Id: @Model.ArticleId},
+            type: 'POST',
+        });
+    })
+
+</script>

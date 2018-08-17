@@ -1,0 +1,172 @@
+﻿@model IEnumerable<AlaFortanFoni.Models.Category>
+
+@{
+    Layout = null;
+}
+
+<link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css?family=Exo+2" rel="stylesheet">
+<style>
+    #kart {
+        background-color: #444444;
+        width: 390px;
+    }
+
+    h3 {
+        background-color: #444444;
+        color: white;
+        border-bottom-style: inset;
+        padding-bottom: 10px;
+        border-bottom-width: 1px;
+    }
+
+
+    #anakategoriler {
+        font-family: 'Exo 2', sans-serif;
+        margin-top: 30px;
+        font-size: 22px;
+        background-color: #ba0055;
+        color: white;
+        list-style: none;
+        border-radius: 5px;
+        padding-left: 20px;
+    }
+
+    #kirilmabir {
+        list-style: none;
+        font-size: 20px;
+        background-color: #1b1f21;
+        color: white;
+        font-family: 'Kanit', sans-serif;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-right: 10px;
+    }
+
+    : #kirilmaiki {
+        list-style: none;
+        font-size: 18px;
+        font-family:;
+    }
+
+    #kirilmauc {
+        font-size: 16px;
+    }
+
+    hr {
+        color: white;
+    }
+
+    #anaKatLink {
+        color: white;
+    }
+
+        #anaKatLink:hover {
+            background-color: #444444;
+            transition: .3s;
+            list-style: none;
+            padding-right: 100px;
+        }
+
+    #altKatLink {
+        color: white;
+    }
+
+    #altKatLinkiki {
+        color: white;
+    }
+</style>
+<div class="col-md-12" id="kart">
+
+    <div class="col-md-12">
+        <h3> KATEGORİLER </h3>
+
+
+
+        @foreach (var category in Model.Where(x => x.ParentId == 0))
+        {
+
+            <ul class="list-unstyled" id="anakategoriler">
+                <li>
+                    @category.CategoryName
+                    @if (Model.Where(x => x.ParentId == category.CategoryId).Count() > 0)
+                    {
+
+                        <ul id="kirilmabir">
+                            @foreach (var subCategory in Model.Where(x => x.ParentId == category.CategoryId).ToList())
+                            {
+                                <li>
+                                    <a class="anaCathov" href="@category.CategoryId" id="anaKatLink"> @subCategory.CategoryName</a>
+
+                                    @if (Model.Where(x => x.ParentId == subCategory.CategoryId).Count() > 0)
+
+                                    {
+                                        //2. Kırılım
+                                        <ul id="kirilmaiki">
+                                            @foreach (var subCategory2 in Model.Where(x => x.ParentId == subCategory.CategoryId).ToList())
+                                            {
+                                                <li>
+                                                    <a href="@category.CategoryId" id="altKatLink"> @subCategory2.CategoryName</a>
+                                                </li>
+                                                if (Model.Where(x => x.ParentId == subCategory2.CategoryId).Count() > 0)
+                                                {
+                                                    //3. Kırılım
+
+                                                    <ul id="kirilmauc">
+                                                        @foreach (var subCategory3 in Model.Where(x => x.ParentId == subCategory2.CategoryId).ToList())
+                                                        {
+                                                            <li>
+                                                                <a href="#" id="altKatLinkiki"> @subCategory3.CategoryName</a>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                }
+                                            }
+                                        </ul>
+                                    }
+
+
+                                </li>
+                            }
+
+                        </ul>
+                    }
+                </li>
+            </ul>
+
+        }
+    </div>
+</div>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.KategoriAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AltKategori)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.KategoriAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AltKategori)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.KategoriID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.KategoriID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.KategoriID })
+            </td>
+        </tr>
+    }
+
+    </table>*@
