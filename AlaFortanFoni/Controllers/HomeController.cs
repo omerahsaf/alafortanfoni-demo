@@ -113,15 +113,7 @@ namespace AlaFortanFoni.Controllers
 
         public ActionResult ApiPartial()
         {
-            string api = "741359c7e36e73868e19b69316d24c7c";
-            string baglanti = "http://api.openweathermap.org/data/2.5/weather?q=İstanbul&mode=xml&lang=tr&units=metric&appid=" + api;
-            XDocument Hava = XDocument.Load(baglanti);
-            var sicaklik = Hava.Descendants("temperature").ElementAt(0).Attribute("value").Value;
-            var icon = Hava.Descendants("weather").ElementAt(0).Attribute("icon").Value;
-            var durum = Hava.Descendants("weather").ElementAt(0).Attribute("value").Value;
-            ViewBag.icon = "http://openweathermap.org/img/w/" + icon + ".png";
-            ViewBag.sicaklik = sicaklik + " ºC";
-            ViewBag.durum = durum;
+
             return View();
 
         }
