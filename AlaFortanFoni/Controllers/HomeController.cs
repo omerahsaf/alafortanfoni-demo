@@ -111,6 +111,7 @@ namespace AlaFortanFoni.Controllers
         }
 
 
+//Hava Durumunu göstermek için ApiPatial adında bir PartialView Açıp oraya hava durumunu çektik. Ana sayfada gösterdik.
         public ActionResult ApiPartial()
         {
 
