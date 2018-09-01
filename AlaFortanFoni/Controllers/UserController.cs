@@ -72,7 +72,7 @@ namespace AlaFortanFoni.Controllers
             if (ModelState.IsValid)
             {
                 //Fotoğraf null omasa da olur ama diğer password, mail, ve username gerekli olduğu için girişi buna bağlı kıldık
-                if (Photo != null & user.Password != null & user.Mail != null & user.UserName != null)
+                if (Photo != null && user.Password != null && user.Mail != null && user.UserName != null)
                 {
                     WebImage img = new WebImage(Photo.InputStream);
                     FileInfo photoinfo = new FileInfo(Photo.FileName);
